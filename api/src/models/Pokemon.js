@@ -31,5 +31,9 @@ module.exports = (sequelize) => {
     weight: {
       type: DataTypes.FLOAT,
     },
+    pokemonType: {
+      type: DataTypes.STRING,
+      default: "unknown",
+    },
   });
 };
