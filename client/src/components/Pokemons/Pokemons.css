@@ -1,0 +1,4 @@
+.multi {
+  display: grid;
+  grid-column: repeat(3, 1fr);
+}
