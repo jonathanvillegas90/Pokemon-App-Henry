@@ -1,4 +1,6 @@
 .multi {
-  display: grid;
-  grid-column: repeat(3, 1fr);
+  display: flex;
+  flex-flow: wrap;
+  width: 70%;
+  margin-left: 15%;
 }

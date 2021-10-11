@@ -13,19 +13,4 @@ const router = Router();
 router.use("/pokemon", PokemonRoute);
 router.use("/type", TypeRoute);
 
-router.get("/", async (req, res) => {
-  try {
-    const apiTypePokemonResponse = await axios.get(
-      "https://pokeapi.co/api/v2/type"
-    );
-    let apiTypePokemon = apiTypePokemonResponse.data.results;
-
-    console.log(apiTypePokemon);
-    Type.bulkCreate(apiTypePokemon);
-    res.send(apiTypePokemon);
-  } catch (error) {
-    next(error);
-  }
-});
-
 module.exports = router;

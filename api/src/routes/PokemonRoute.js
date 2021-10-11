@@ -7,10 +7,11 @@ const router = Router();
 
 router.get("/", async (req, res, next) => {
   const { name } = req.query;
+
   if (name) {
-    //trae pokemon por nombre
     try {
       const namePokemonDB = await Pokemon.findOne({ where: { name } });
+
       if (namePokemonDB !== null) {
         res.send(namePokemonDB);
       } else {
@@ -29,7 +30,7 @@ router.get("/", async (req, res, next) => {
           defense: namePokemonAPI.data.stats[2].base_stat,
           speed: namePokemonAPI.data.stats[5].base_stat,
         };
-        res.send(pokemonFind);
+        res.send(pokemon);
       }
     } catch (error) {
       next(error);

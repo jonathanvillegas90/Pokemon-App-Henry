@@ -4,7 +4,9 @@
   height: 250px;
   width: 250px;
 }
-
+img {
+  width: 150px;
+}
 .cont-pokemon:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
