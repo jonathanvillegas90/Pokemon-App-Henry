@@ -117,6 +117,7 @@ function rootReducer(state = initialState, action) {
         pokemonDetail: {},
       };
     }
+
     default:
       return state;
   }

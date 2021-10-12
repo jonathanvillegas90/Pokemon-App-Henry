@@ -30,8 +30,13 @@ export const Home = () => {
   };
   const handleSubmitType = (e) => {
     e.preventDefault();
-    dispatch(filterByType(selectionType));
-    setselectionType((setselectionType) => [...selectionType, " "]);
+    if (selectionType === "getAll") {
+      dispatch(getAll());
+      setselectionType((setselectionType) => [...selectionType, " "]);
+    } else {
+      dispatch(filterByType(selectionType));
+      setselectionType((setselectionType) => [...selectionType, " "]);
+    }
   };
   const [selectionOrder, setselectionOrder] = useState();
   const handleChangeOrder = (e) => {
@@ -72,6 +77,7 @@ export const Home = () => {
           <legend>Order by Type:</legend>
           <select onChange={handleChangeType}>
             <option defaultValue>Seleccione una opción</option>
+            <option value="getAll">All types</option>
             {types.map((type) => {
               return (
                 <option key={type.id} value={type.name}>
