@@ -1,12 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { filterByType, OrderByID, orderByName } from "../../actions";
+import {
+  filterByType,
+  getAll,
+  getType,
+  OrderByID,
+  orderByName,
+} from "../../actions";
+import { Loading } from "../Loading/Loading";
 import Pokemons from "../Pokemons/Pokemons";
+import { SearchBar } from "../SearchBar/SearchBar";
 import "./Home.css";
 
 export const Home = () => {
-  let types = useSelector((state) => state.types);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAll());
+    dispatch(getType());
+  }, []);
+
+  const types = useSelector((state) => state.types);
+
+  const pokemons = useSelector((state) => state.pokemons);
+
   const [selectionType, setselectionType] = useState();
   const handleChangeType = (e) => {
     setselectionType(e.target.value);
@@ -14,7 +31,7 @@ export const Home = () => {
   const handleSubmitType = (e) => {
     e.preventDefault();
     dispatch(filterByType(selectionType));
-    setselectionType((selectiontype) => [...selectionType, " "]);
+    setselectionType((setselectionType) => [...selectionType, " "]);
   };
   const [selectionOrder, setselectionOrder] = useState();
   const handleChangeOrder = (e) => {
@@ -76,8 +93,9 @@ export const Home = () => {
           </select>
           <input type="submit" value="Select" />
         </form>
+        <SearchBar />
       </div>
-      <Pokemons />
+      {!pokemons.length ? <Loading /> : <Pokemons />}
     </>
   );
 };

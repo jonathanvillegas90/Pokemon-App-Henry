@@ -1,5 +1,5 @@
 import React from "react";
-import Video from "../../video/pokemon intro.mp4";
+import Video from "../../video/pokemon-intro.ogv";
 import Logo from "../../image/Logo.png";
 import "./LandingPage.css";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ export const LandingPage = () => {
         <button className="BB">BIENVENIDO</button>
       </Link>
       <div className="vid">
-        <video autoPlay loop>
+        <video autoPlay loop muted>
           <source src={Video} type="video/mp4" />
         </video>
       </div>

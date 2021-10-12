@@ -29,6 +29,11 @@ export function getByName(name) {
       .catch({ msg: "algo fallo" });
   };
 }
+export function getByNameSearch(name) {
+  return function (dispatch) {
+    return dispatch({ type: "GET_BY_NAME_SEARCH", payload: name });
+  };
+}
 
 export function getByID(id) {
   return function (dispatch) {
@@ -49,7 +54,9 @@ export function getType() {
 }
 
 export function filterByType(type) {
-  return { type: "GET_BY_TYPE", payload: type };
+  return function (dispatch) {
+    return dispatch({ type: "GET_BY_TYPE", payload: type });
+  };
 }
 
 export function OrderByID(order) {
@@ -62,4 +69,9 @@ export function orderByName(order) {
   if (order === "asc") {
     return { type: "ORDER_BY_NAME_ASC" };
   } else if (order === "des") return { type: "ORDER_BY_NAME_DES" };
+}
+export function cleanDetail() {
+  return function (dispatch) {
+    return dispatch({ type: "RESET_DETAILS" });
+  };
 }

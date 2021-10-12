@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import { addPokemon } from "../../actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import "./CreatePokemon.css";
+
+export function validate(input) {
+  let errors = {};
+  if (!input.name) {
+    errors.name = "Name is required";
+  } else if (RegExp("[a-zA-Z ]{2,254}").test(input.name)) {
+    errors.name = "Name is invalid";
+  }
+  return errors;
+}
 
 function CreatePokemon() {
   const [input, setInput] = useState();
-
+  const [errors, setErrors] = useState({});
+  let types = useSelector((state) => state.types);
   const dispatch = useDispatch();
 
   const handleChange = function (e) {
@@ -12,20 +24,35 @@ function CreatePokemon() {
       ...input,
       [e.target.name]: e.target.value,
     });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(addPokemon(input));
-    setInput("");
+    setInput(" ");
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="formulario" onSubmit={handleSubmit}>
       <h1>Create Pokémon</h1>
       <label>Name</label>
       <input name="name" onChange={handleChange}></input>
-
-      <label>Type</label>
-      <textarea name="type" onChange={handleChange}></textarea>
+      {errors.name && <p className="danger">{errors.name}</p>}
+      <legend>Select Type:</legend>
+      <select onChange={handleChange}>
+        <option defaultValue>Seleccione una opción</option>
+        {types.map((type) => {
+          return (
+            <option key={type.id} value={type.name}>
+              {type.name}
+            </option>
+          );
+        })}
+      </select>
 
       <label>HP</label>
       <input
@@ -81,7 +108,9 @@ function CreatePokemon() {
         onChange={handleChange}
       ></input>
 
-      <button type="submit">Create</button>
+      <button className="btn_submit" type="submit">
+        Create
+      </button>
     </form>
   );
 }

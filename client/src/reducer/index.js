@@ -25,6 +25,15 @@ function rootReducer(state = initialState, action) {
         pokemonDetail: action.payload,
       };
     }
+    case "GET_BY_NAME_SEARCH": {
+      return {
+        ...state,
+        pokemons: state.pokemons.filter(
+          (pokemons) => pokemons.name === action.payload
+        ),
+        pokemonDetail: state.pokemons[0],
+      };
+    }
     case "ADD_POKEMON": {
       return {
         ...state,
@@ -100,6 +109,12 @@ function rootReducer(state = initialState, action) {
           }
           return 0;
         }),
+      };
+    }
+    case "RESET_DETAILS": {
+      return {
+        ...state,
+        pokemonDetail: {},
       };
     }
     default:

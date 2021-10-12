@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
+import React, { Component, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { getByName } from "../../actions";
+import { getByNameSearch } from "../../actions";
 
 export const SearchBar = () => {
   const [input, setInput] = useState("");
@@ -13,19 +13,22 @@ export const SearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getByName(input));
-    setInput("");
+    dispatch(getByNameSearch(input));
+    setInput((Input) => [...input, " "]);
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <label>
+        <span>Pokémon search: </span>
+      </label>
       <input
         type="text"
-        placeholder="Pokémon..."
-        value={input}
+        placeholder="Pokémon search"
+        name="name"
         onChange={handleChange}
       />
-      <input type="submit" value="Search" />
+      <button type="submit">Search</button>
     </form>
   );
 };

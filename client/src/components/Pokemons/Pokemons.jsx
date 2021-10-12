@@ -1,16 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAll, getByName } from "../../actions/index.js";
+import { getByName } from "../../actions/index.js";
 import Pokemon from "../Pokemon/Pokemon.jsx";
 import "./Pokemons.css";
 
 const Pokemons = () => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAll());
-  }, []);
 
   const pokemons = useSelector((state) => state.pokemons);
 
