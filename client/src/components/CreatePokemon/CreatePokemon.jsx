@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addPokemon } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./CreatePokemon.css";
+import { Link } from "react-router-dom";
 
 export function validate(input) {
   let errors = {};
@@ -107,10 +108,11 @@ function CreatePokemon() {
         max="9999"
         onChange={handleChange}
       ></input>
-
-      <button className="btn_submit" type="submit">
-        Create
-      </button>
+      <Link to="/home">
+        <button className="btn_submit" type="submit">
+          Create
+        </button>
+      </Link>
     </form>
   );
 }

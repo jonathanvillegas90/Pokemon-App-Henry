@@ -10,10 +10,15 @@ router.get("/", async (req, res) => {
       "https://pokeapi.co/api/v2/type"
     );
     let apiTypePokemon = apiTypePokemonResponse.data.results;
-
-    Type.bulkCreate(apiTypePokemon);
     const dbType = await Type.findAll({ attributes: ["id", "name"] });
-    res.send(dbType);
+    if (dbType > 0) {
+      res.send(dbType);
+    } else {
+      Type.bulkCreate(apiTypePokemon);
+      const dbType = await Type.findAll({ attributes: ["id", "name"] });
+
+      res.send(dbType);
+    }
   } catch (error) {
     next(error);
   }

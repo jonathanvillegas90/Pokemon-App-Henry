@@ -18,7 +18,7 @@ export const Home = () => {
   useEffect(() => {
     dispatch(getAll());
     dispatch(getType());
-  }, []);
+  }, [dispatch]);
 
   const types = useSelector((state) => state.types);
 
