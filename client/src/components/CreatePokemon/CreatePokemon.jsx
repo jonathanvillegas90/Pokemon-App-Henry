@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { addPokemon } from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./CreatePokemon.css";
-import { Link } from "react-router-dom";
 
 export function validate(input) {
   let errors = {};
   if (!input.name) {
     errors.name = "Name is required";
-  } else if (RegExp("[a-zA-Z ]{2,254}").test(input.name)) {
+  } else if (!/\S+\S+/.test(input.name)) {
     errors.name = "Name is invalid";
   }
   return errors;
@@ -19,6 +18,13 @@ function CreatePokemon() {
   const [errors, setErrors] = useState({});
   let types = useSelector((state) => state.types);
   const dispatch = useDispatch();
+
+  const handleSelectionChange = function (e) {
+    setInput({
+      ...input,
+      type: e.target.value,
+    });
+  };
 
   const handleChange = function (e) {
     setInput({
@@ -34,17 +40,23 @@ function CreatePokemon() {
   };
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(addPokemon(input));
-    setInput(" ");
+    if (!errors.hasOwnProperty("name")) {
+      dispatch(addPokemon(input));
+      setInput({});
+      alert("pokemon creado correctamente");
+      window.location = "http://localhost:3000/home";
+    } else {
+      alert("no se están colocando los valores correctos");
+    }
   }
   return (
     <form className="formulario" onSubmit={handleSubmit}>
       <h1>Create Pokémon</h1>
       <label>Name</label>
-      <input name="name" onChange={handleChange}></input>
+      <input name="name" required onChange={handleChange}></input>
       {errors.name && <p className="danger">{errors.name}</p>}
       <legend>Select Type:</legend>
-      <select onChange={handleChange}>
+      <select onChange={handleSelectionChange}>
         <option defaultValue>Seleccione una opción</option>
         {types.map((type) => {
           return (
@@ -108,11 +120,11 @@ function CreatePokemon() {
         max="9999"
         onChange={handleChange}
       ></input>
-      <Link to="/home">
-        <button className="btn_submit" type="submit">
-          Create
-        </button>
-      </Link>
+      {/* <Link to="/home"> */}
+      <button className="btn_submit" type="submit" act>
+        Create
+      </button>
+      {/* </Link> */}
     </form>
   );
 }

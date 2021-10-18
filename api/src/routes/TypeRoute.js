@@ -4,7 +4,7 @@ const { Type } = require("../db");
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const apiTypePokemonResponse = await axios.get(
       "https://pokeapi.co/api/v2/type"
@@ -20,7 +20,8 @@ router.get("/", async (req, res) => {
       res.send(dbType);
     }
   } catch (error) {
-    next(error);
+    // next(error);
+    console.log("aca entro");
   }
 });
 

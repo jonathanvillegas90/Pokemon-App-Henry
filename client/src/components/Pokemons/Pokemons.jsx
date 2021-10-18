@@ -24,7 +24,6 @@ export default function Pokemons() {
   // const paginar = () => {
   //   let slice = pokemons.slice(current, current + maxPorPagina);
   //   setdata(slice);
-  //   setpokemons((setpokemons) => [...pokemons, " "]);
   // };
   // useEffect(() => {
   //   paginar();
@@ -74,7 +73,11 @@ export default function Pokemons() {
                 id={pokemon.id}
                 name={pokemon.name}
                 photo={pokemon.photo}
-                type={pokemon.typePokemon}
+                type={
+                  pokemon.typePokemon
+                    ? pokemon.typePokemon
+                    : pokemon.pokemonType
+                }
               />
             </Link>
           );

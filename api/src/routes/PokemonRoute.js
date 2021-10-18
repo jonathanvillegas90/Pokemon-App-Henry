@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const axios = require("axios");
-const { Pokemon } = require("../db");
+const { Pokemon, Op } = require("../db");
 const { uuid } = require("uuidv4");
 
 const router = Router();
@@ -10,7 +10,13 @@ router.get("/", async (req, res, next) => {
 
   if (name) {
     try {
-      const namePokemonDB = await Pokemon.findOne({ where: { name } });
+      const namePokemonDB = await Pokemon.findOne({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+        },
+      });
 
       if (namePokemonDB !== null) {
         res.send(namePokemonDB);
@@ -95,6 +101,18 @@ router.post("/", (req, res, next) => {
   let { type } = req.body;
   if (!type) {
     type = "unknown";
+  }
+  if (
+    hp < 0 ||
+    weight < 0 ||
+    attack < 0 ||
+    height < 0 ||
+    defense < 0 ||
+    speed < 0
+  ) {
+    res
+      .status(400)
+      .send({ msg: "El mensaje contiene numeros negativos no aceptados" });
   }
   let pokemon = {
     id: uuid(),
