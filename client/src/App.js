@@ -5,6 +5,7 @@ import { Home } from "./components/Home/Home";
 import { PokemonDetails } from "./components/PokemonDetails/PokemonDetails";
 import { Nav } from "./components/Nav/Nav";
 import CreatePokemon from "./components/CreatePokemon/CreatePokemon";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/pokemon/:name" component={PokemonDetails} />
           <Route exact path="/pokemon" component={PokemonDetails} />
           <Route exact path="/create" component={CreatePokemon} />
+          <Footer />
         </>
       </Switch>
     </div>

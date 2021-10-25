@@ -1,16 +1,68 @@
-.cont-pokemon {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  height: 250px;
-  width: 250px;
-}
 img {
   width: 150px;
 }
-.cont-pokemon:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+a {
+  text-decoration: none;
+  color: black;
+  text-transform: capitalize;
 }
-
 .details {
   padding: 2px 16px;
+  transition: 0.3s;
+  background: rgb(208, 215, 255);
+  background: radial-gradient(
+    circle,
+    rgba(208, 215, 255, 1) 0%,
+    rgba(228, 240, 234, 0.9136029411764706) 100%
+  );
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+.water {
+  transition: 0.3s;
+  height: 250px;
+  width: 210px;
+  background-image: url(https://pm1.narvii.com/7243/46d5cfd672a1e2fca16c78d728e2b10cb57f7ce0r1-669-521v2_hq.jpg);
+  background-position: right;
+  background-size: cover;
+  border-radius: 10px;
+  margin: 3px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.water:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  transform: scale(1.1, 1.1);
+}
+.fire {
+  transition: 0.3s;
+  height: 250px;
+  width: 210px;
+  background-image: url(https://pm1.narvii.com/7243/8ee17e7a8790303410b30a2fbcb18183fc12166er1-623-499v2_hq.jpg);
+  background-position: right;
+  background-size: cover;
+  border-radius: 10px;
+  margin: 3px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.fire:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  transform: scale(1.1, 1.1);
+}
+.grass {
+  transition: 0.3s;
+  height: 250px;
+  width: 210px;
+  background-image: url(https://pm1.narvii.com/7243/0b36782d158f6da0639e38ebf94af3d5c37288c2r1-668-486v2_hq.jpg);
+  background-position: right;
+  background-size: cover;
+  border-radius: 10px;
+  margin: 3px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.grass:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+  transform: scale(1.1, 1.1);
 }

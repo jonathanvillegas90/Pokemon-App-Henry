@@ -7,24 +7,29 @@ import {
   OrderByID,
   orderByName,
 } from "../../actions";
-import { Loading } from "../Loading/Loading";
 import Pokemons from "../Pokemons/Pokemons";
+import { Loading } from "../Loading/Loading";
 import { SearchBar } from "../SearchBar/SearchBar";
 import "./Home.css";
 
 export const Home = () => {
   const dispatch = useDispatch();
+  const types = useSelector((state) => state.types);
+  const pokemons = useSelector((state) => state.pokemons);
 
   useEffect(() => {
     dispatch(getAll());
     dispatch(getType());
   }, [dispatch]);
 
-  const types = useSelector((state) => state.types);
-
-  const pokemons = useSelector((state) => state.pokemons);
-
   const [selectionType, setselectionType] = useState();
+  const [page, setpage] = useState(0);
+  const [current, setcurrent] = useState(0);
+  const [maxPorPagina] = useState(9);
+  const [slice, setSlice] = useState([]);
+  const maxPaginas = Math.ceil(pokemons.length / maxPorPagina);
+  const [selectionOrder, setselectionOrder] = useState();
+
   const handleChangeType = (e) => {
     setselectionType(e.target.value);
   };
@@ -32,13 +37,12 @@ export const Home = () => {
     e.preventDefault();
     if (selectionType === "getAll") {
       dispatch(getAll());
-      setselectionType((setselectionType) => [...selectionType, " "]);
+      paginar();
     } else {
       dispatch(filterByType(selectionType));
-      setselectionType((setselectionType) => [...selectionType, " "]);
+      paginar();
     }
   };
-  const [selectionOrder, setselectionOrder] = useState();
   const handleChangeOrder = (e) => {
     setselectionOrder(e.target.value);
   };
@@ -47,27 +51,61 @@ export const Home = () => {
     switch (selectionOrder) {
       case "Name A-Z": {
         dispatch(orderByName("asc"));
-        setselectionOrder((setselectionOrder) => [...selectionOrder, " "]);
+        paginar();
         break;
       }
       case "Name Z-A": {
         dispatch(orderByName("des"));
-        setselectionOrder((setselectionOrder) => [...selectionOrder, " "]);
+        paginar();
         break;
       }
       case "ID asc": {
         dispatch(OrderByID("asc"));
-        setselectionOrder((setselectionOrder) => [...selectionOrder, " "]);
+        paginar();
         break;
       }
       case "ID des": {
         dispatch(OrderByID("des"));
-        setselectionOrder((setselectionOrder) => [...selectionOrder, " "]);
+        paginar();
         break;
       }
 
       default:
         break;
+    }
+  };
+  useEffect(() => {
+    paginar();
+  }, [dispatch]);
+  useEffect(() => {
+    paginar();
+  }, [current]);
+  let aux = [];
+  for (let i = 1; i < maxPaginas + 1; i++) {
+    aux.push(i);
+  }
+  function paginar() {
+    setSlice(pokemons.slice(current, current + maxPorPagina));
+  }
+
+  const handleClickNext = (e) => {
+    if (page < maxPaginas - 1) {
+      setpage(page + 1);
+      setcurrent(current + maxPorPagina);
+    }
+  };
+  const handleClickPrev = (e) => {
+    if (page > 0) {
+      setpage(page - 1);
+      setcurrent(current - maxPorPagina);
+    }
+  };
+  const handleClickNum = (e) => {
+    setpage(e.target.value);
+    if (e.target.value === "1") {
+      setcurrent(0);
+    } else {
+      setcurrent((page - 1) * maxPorPagina);
     }
   };
   return (
@@ -100,8 +138,15 @@ export const Home = () => {
           <input type="submit" value="Select" />
         </form>
         <SearchBar />
+        <div>
+          <input type="button" onClick={handleClickPrev} value="Prev" />
+          {aux.map((num) => {
+            return <input type="button" onClick={handleClickNum} value={num} />;
+          })}
+          <input type="button" onClick={handleClickNext} value="Next" />
+        </div>
       </div>
-      {!pokemons.length ? <Loading /> : <Pokemons />}
+      {!pokemons ? <Loading /> : <Pokemons params={slice} />}
     </>
   );
 };

@@ -20,8 +20,7 @@ router.get("/", async (req, res, next) => {
       res.send(dbType);
     }
   } catch (error) {
-    // next(error);
-    console.log("aca entro");
+    next(error);
   }
 });
 

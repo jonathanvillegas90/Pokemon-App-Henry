@@ -4,7 +4,7 @@ import pokeball from "../../image/pokeball.png";
 
 const Pokemon = (params) => {
   return (
-    <div className="cont-pokemon">
+    <div className={params.type}>
       <img src={params.photo ? params.photo : pokeball} alt={params.name} />
       <div className="details">
         <h3>{params.name}</h3>

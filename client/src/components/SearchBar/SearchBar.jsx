@@ -6,7 +6,6 @@ import { getByNameSearch } from "../../actions";
 export const SearchBar = () => {
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
-
   const handleChange = (e) => {
     setInput(e.target.value);
   };
@@ -14,7 +13,7 @@ export const SearchBar = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(getByNameSearch(input));
-    setInput((Input) => [...input, " "]);
+    setInput("");
   };
 
   return (

@@ -1,6 +1,9 @@
 .multi {
   display: flex;
   flex-flow: wrap;
-  width: 70%;
+  width: 60%;
   margin-left: 15%;
+  justify-content: center;
+  margin-top: 10px;
+  background-color: rgba(8, 34, 78, 0.9);
 }
