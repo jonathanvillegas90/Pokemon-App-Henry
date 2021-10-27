@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { getByNameSearch } from "../../actions";
+import { getByName } from "../../actions";
 
 export const SearchBar = () => {
   const [input, setInput] = useState("");
@@ -12,7 +12,7 @@ export const SearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getByNameSearch(input));
+    dispatch(getByName(input));
     setInput("");
   };
 

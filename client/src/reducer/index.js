@@ -22,16 +22,14 @@ function rootReducer(state = initialState, action) {
     case "GET_BY_NAME": {
       return {
         ...state,
+        pokemons: action.payload,
         pokemonDetail: action.payload,
       };
     }
     case "GET_BY_NAME_SEARCH": {
       return {
         ...state,
-        pokemons: state.pokemons.filter(
-          (pokemons) => pokemons.name === action.payload
-        ),
-        pokemonDetail: state.pokemons[0],
+        pokemons: action.payload,
       };
     }
     case "ADD_POKEMON": {

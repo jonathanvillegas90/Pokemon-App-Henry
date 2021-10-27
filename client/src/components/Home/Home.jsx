@@ -14,19 +14,19 @@ import "./Home.css";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const types = useSelector((state) => state.types);
-  const pokemons = useSelector((state) => state.pokemons);
 
   useEffect(() => {
     dispatch(getAll());
     dispatch(getType());
   }, [dispatch]);
+  const types = useSelector((state) => state.types);
+  const pokemons = useSelector((state) => state.pokemons);
 
   const [selectionType, setselectionType] = useState();
   const [page, setpage] = useState(0);
   const [current, setcurrent] = useState(0);
   const [maxPorPagina] = useState(9);
-  const [slice, setSlice] = useState([]);
+  const [data, setData] = useState();
   const maxPaginas = Math.ceil(pokemons.length / maxPorPagina);
   const [selectionOrder, setselectionOrder] = useState();
 
@@ -37,10 +37,8 @@ export const Home = () => {
     e.preventDefault();
     if (selectionType === "getAll") {
       dispatch(getAll());
-      paginar();
     } else {
       dispatch(filterByType(selectionType));
-      paginar();
     }
   };
   const handleChangeOrder = (e) => {
@@ -74,9 +72,7 @@ export const Home = () => {
         break;
     }
   };
-  useEffect(() => {
-    paginar();
-  }, [dispatch]);
+
   useEffect(() => {
     paginar();
   }, [current]);
@@ -84,8 +80,10 @@ export const Home = () => {
   for (let i = 1; i < maxPaginas + 1; i++) {
     aux.push(i);
   }
+  let slice = [];
   function paginar() {
-    setSlice(pokemons.slice(current, current + maxPorPagina));
+    slice = pokemons.slice(current, current + maxPorPagina);
+    setData(slice);
   }
 
   const handleClickNext = (e) => {
@@ -108,6 +106,7 @@ export const Home = () => {
       setcurrent((page - 1) * maxPorPagina);
     }
   };
+
   return (
     <>
       <div className="orderby">
@@ -146,7 +145,7 @@ export const Home = () => {
           <input type="button" onClick={handleClickNext} value="Next" />
         </div>
       </div>
-      {!pokemons ? <Loading /> : <Pokemons params={slice} />}
+      {pokemons.length === 0 ? <Loading /> : <Pokemons params={data} />}
     </>
   );
 };

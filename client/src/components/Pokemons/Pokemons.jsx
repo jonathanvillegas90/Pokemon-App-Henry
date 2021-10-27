@@ -1,13 +1,16 @@
-import React, { Component, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getByName } from "../../actions/index.js";
+import { getByID, getByName } from "../../actions/index.js";
+import { Loading } from "../Loading/Loading.jsx";
 import Pokemon from "../Pokemon/Pokemon.jsx";
 import "./Pokemons.css";
 
 export default function Pokemons(params) {
   const dispatch = useDispatch();
+
   let data = params.params;
+
   return (
     <>
       <div className="multi">
@@ -15,7 +18,7 @@ export default function Pokemons(params) {
           return (
             <Link
               to={`/pokemon/${pokemon.name}`}
-              onClick={() => dispatch(getByName(pokemon.name))}
+              onClick={() => dispatch(getByID(pokemon.id))}
             >
               <Pokemon
                 key={pokemon.id}
