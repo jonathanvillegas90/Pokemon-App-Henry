@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  cleanPokemons,
   filterByType,
   getAll,
   getType,
   OrderByID,
   orderByName,
+  getByName,
 } from "../../actions";
 import Pokemons from "../Pokemons/Pokemons";
 import { Loading } from "../Loading/Loading";
@@ -16,12 +18,14 @@ export const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAll());
     dispatch(getType());
+    dispatch(getAll());
   }, [dispatch]);
   const types = useSelector((state) => state.types);
   const pokemons = useSelector((state) => state.pokemons);
+  const pokemonsSearch = useSelector((state) => state.pokemonsSearch);
 
+  const [input, setInput] = useState("");
   const [selectionType, setselectionType] = useState();
   const [page, setpage] = useState(0);
   const [current, setcurrent] = useState(0);
@@ -30,15 +34,29 @@ export const Home = () => {
   const maxPaginas = Math.ceil(pokemons.length / maxPorPagina);
   const [selectionOrder, setselectionOrder] = useState();
 
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getByName(input));
+    setData(() => [...data, pokemonsSearch]);
+    setInput("");
+  };
   const handleChangeType = (e) => {
     setselectionType(e.target.value);
   };
   const handleSubmitType = (e) => {
     e.preventDefault();
     if (selectionType === "getAll") {
-      dispatch(getAll());
+      setcurrent(0);
+      paginar();
     } else {
-      dispatch(filterByType(selectionType));
+      let tipoSeleccionado = pokemons.filter(
+        (pokemon) => pokemon.typePokemon === selectionType
+      );
+      setData(tipoSeleccionado);
     }
   };
   const handleChangeOrder = (e) => {
@@ -113,8 +131,10 @@ export const Home = () => {
         <form onSubmit={handleSubmitType}>
           <legend>Order by Type:</legend>
           <select onChange={handleChangeType}>
-            <option defaultValue>Seleccione una opción</option>
-            <option value="getAll">All types</option>
+            <option value hidden>
+              Seleccione una opción
+            </option>
+            <option defaultvalue="getAll">All types</option>
             {types.map((type) => {
               return (
                 <option key={type.id} value={type.name}>
@@ -136,7 +156,7 @@ export const Home = () => {
           </select>
           <input type="submit" value="Select" />
         </form>
-        <SearchBar />
+
         <div>
           <input type="button" onClick={handleClickPrev} value="Prev" />
           {aux.map((num) => {
@@ -145,6 +165,18 @@ export const Home = () => {
           <input type="button" onClick={handleClickNext} value="Next" />
         </div>
       </div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <span>Pokémon search: </span>
+        </label>
+        <input
+          type="text"
+          placeholder="Pokémon search"
+          name="name"
+          onChange={handleChange}
+        />
+        <button type="submit">Search</button>
+      </form>
       {pokemons.length === 0 ? <Loading /> : <Pokemons params={data} />}
     </>
   );

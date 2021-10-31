@@ -75,3 +75,8 @@ export function cleanDetail() {
     return dispatch({ type: "RESET_DETAILS" });
   };
 }
+export function cleanPokemons() {
+  return function (dispatch) {
+    return dispatch({ type: "RESET_POKEMONS" });
+  };
+}

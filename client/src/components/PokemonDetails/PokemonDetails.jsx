@@ -6,7 +6,7 @@ import pokeball from "../../image/pokeball.png";
 
 export const PokemonDetails = () => {
   const pokemonDetail = useSelector((state) => state.pokemonDetail);
-  console.log(pokemonDetail);
+
   if (!pokemonDetail.name) {
     return <Loading />;
   } else {

@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
     );
     let apiTypePokemon = apiTypePokemonResponse.data.results;
     const dbType = await Type.findAll({ attributes: ["id", "name"] });
-    if (dbType > 0) {
+    if (dbType.length > 0) {
       res.send(dbType);
     } else {
       Type.bulkCreate(apiTypePokemon);

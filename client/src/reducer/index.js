@@ -3,6 +3,7 @@ const initialState = {
   types: [],
   pokemonDetail: {},
   pokemonCreate: {},
+  pokemonSearch: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -22,8 +23,7 @@ function rootReducer(state = initialState, action) {
     case "GET_BY_NAME": {
       return {
         ...state,
-        pokemons: action.payload,
-        pokemonDetail: action.payload,
+        pokemonsSearch: action.payload,
       };
     }
     case "GET_BY_NAME_SEARCH": {
@@ -113,6 +113,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         pokemonDetail: {},
+      };
+    }
+    case "RESET_POKEMONS": {
+      return {
+        ...state,
+        pokemons: [],
       };
     }
 
