@@ -15,7 +15,7 @@ export const LandingPage = () => {
         <button className="BB">BIENVENIDO</button>
       </Link>
       <div className="vid">
-        <video autoPlay loop muted>
+        <video autoPlay loop>
           <source src={Video} type="video/mp4" />
         </video>
       </div>

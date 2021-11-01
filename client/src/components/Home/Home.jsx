@@ -11,8 +11,8 @@ import {
 } from "../../actions";
 import Pokemons from "../Pokemons/Pokemons";
 import { Loading } from "../Loading/Loading";
-import { SearchBar } from "../SearchBar/SearchBar";
 import "./Home.css";
+import { useHistory } from "react-router-dom";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -23,26 +23,24 @@ export const Home = () => {
   }, [dispatch]);
   const types = useSelector((state) => state.types);
   const pokemons = useSelector((state) => state.pokemons);
-  const pokemonsSearch = useSelector((state) => state.pokemonsSearch);
 
   const [input, setInput] = useState("");
   const [selectionType, setselectionType] = useState();
   const [page, setpage] = useState(0);
   const [current, setcurrent] = useState(0);
   const [maxPorPagina] = useState(9);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const maxPaginas = Math.ceil(pokemons.length / maxPorPagina);
   const [selectionOrder, setselectionOrder] = useState();
 
   const handleChange = (e) => {
     setInput(e.target.value);
   };
-
+  let history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(getByName(input));
-    setData(() => [...data, pokemonsSearch]);
-    setInput("");
+    history.push(`/pokemon/${input}`);
   };
   const handleChangeType = (e) => {
     setselectionType(e.target.value);
@@ -127,12 +125,14 @@ export const Home = () => {
 
   return (
     <>
-      <div className="orderby">
+      <div className="orderby top-button-group">
         <form onSubmit={handleSubmitType}>
-          <legend>Order by Type:</legend>
-          <select onChange={handleChangeType}>
+          <select
+            className="retro-button blue-button"
+            onChange={handleChangeType}
+          >
             <option value hidden>
-              Seleccione una opción
+              Order by Type:
             </option>
             <option defaultvalue="getAll">All types</option>
             {types.map((type) => {
@@ -143,39 +143,65 @@ export const Home = () => {
               );
             })}
           </select>
-          <input type="submit" value="Select" />
+          <input
+            className="retro-button yellow-button"
+            type="submit"
+            value="Select"
+          />
         </form>
         <form onSubmit={handleSubmitOrder}>
-          <legend>Order by:</legend>
-          <select onChange={handleChangeOrder}>
-            <option defaultValue>Seleccione una opción</option>
+          <select
+            className="retro-button blue-button"
+            onChange={handleChangeOrder}
+          >
+            <option value hidden>
+              Order by:
+            </option>
             <option value="Name A-Z">Name A-Z</option>
             <option value="Name Z-A">Name Z-A</option>
-            <option value="ID asc">ID asc</option>
+            <option defaultvalue="ID asc">ID asc</option>
             <option value="ID des">ID desc</option>
           </select>
-          <input type="submit" value="Select" />
+          <input className="retro-button" type="submit" value="Select" />
         </form>
 
         <div>
-          <input type="button" onClick={handleClickPrev} value="Prev" />
+          <input
+            className="retro-button red-button"
+            type="button"
+            onClick={handleClickPrev}
+            value="Prev"
+          />
           {aux.map((num) => {
-            return <input type="button" onClick={handleClickNum} value={num} />;
+            return (
+              <input
+                key={num}
+                className="retro-button"
+                type="button"
+                onClick={handleClickNum}
+                value={num}
+              />
+            );
           })}
-          <input type="button" onClick={handleClickNext} value="Next" />
+          <input
+            className="retro-button green-button"
+            type="button"
+            onClick={handleClickNext}
+            value="Next"
+          />
         </div>
       </div>
       <form onSubmit={handleSubmit}>
-        <label>
-          <span>Pokémon search: </span>
-        </label>
         <input
+          className="retro-button"
           type="text"
           placeholder="Pokémon search"
           name="name"
           onChange={handleChange}
         />
-        <button type="submit">Search</button>
+        <button className="retro-button" type="submit">
+          Search
+        </button>
       </form>
       {pokemons.length === 0 ? <Loading /> : <Pokemons params={data} />}
     </>

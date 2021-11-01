@@ -30,13 +30,26 @@ export const PokemonDetails = () => {
                 : pokemonDetail.pokemonType}
             </h2>
           </div>
-          <div className="cont-stats">
-            <p>Hp: {pokemonDetail.hp}</p>
-            <p>Attack: {pokemonDetail.attack}</p>
-            <p>Defense: {pokemonDetail.defense}</p>
-            <p>Speed: {pokemonDetail.speed}</p>
-            <p>Heigth: {pokemonDetail.height}</p>
-            <p>Weigth: {pokemonDetail.weight}</p>
+          <div className="card-details">
+            <p>
+              Hp:<span> {pokemonDetail.hp}</span>
+            </p>
+            <p>
+              Attack: <span>{pokemonDetail.attack}</span>
+            </p>
+            <p>
+              Defense: <span>{pokemonDetail.defense}</span>
+            </p>
+
+            <p>
+              Speed: <span>{pokemonDetail.speed}</span>
+            </p>
+            <p>
+              Heigth:<span> {pokemonDetail.height}</span>
+            </p>
+            <p>
+              Weigth: <span>{pokemonDetail.weight}</span>
+            </p>
           </div>
         </div>
       </>
