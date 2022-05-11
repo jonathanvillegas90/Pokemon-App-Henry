@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  cleanPokemons,
-  filterByType,
   getAll,
   getType,
   OrderByID,
@@ -21,6 +19,7 @@ export const Home = () => {
     dispatch(getType());
     dispatch(getAll());
   }, [dispatch]);
+
   const types = useSelector((state) => state.types);
   const pokemons = useSelector((state) => state.pokemons);
 
@@ -30,13 +29,14 @@ export const Home = () => {
   const [current, setcurrent] = useState(0);
   const [maxPorPagina] = useState(9);
   const [data, setData] = useState([]);
+  console.log("data", data);
   const maxPaginas = Math.ceil(pokemons.length / maxPorPagina);
   const [selectionOrder, setselectionOrder] = useState();
+  let history = useHistory();
 
   const handleChange = (e) => {
     setInput(e.target.value);
   };
-  let history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(getByName(input));
@@ -89,17 +89,14 @@ export const Home = () => {
     }
   };
 
-  useEffect(() => {
-    paginar();
-  }, [current]);
   let aux = [];
   for (let i = 1; i < maxPaginas + 1; i++) {
     aux.push(i);
   }
-  let slice = [];
+
   function paginar() {
-    slice = pokemons.slice(current, current + maxPorPagina);
-    setData(slice);
+    console.log("current", current, current + maxPorPagina);
+    setData(() => pokemons.slice(current, current + maxPorPagina));
   }
 
   const handleClickNext = (e) => {
@@ -118,8 +115,10 @@ export const Home = () => {
     setpage(e.target.value);
     if (e.target.value === "1") {
       setcurrent(0);
+      paginar();
     } else {
       setcurrent((page - 1) * maxPorPagina);
+      paginar();
     }
   };
 
@@ -131,10 +130,7 @@ export const Home = () => {
             className="retro-button blue-button"
             onChange={handleChangeType}
           >
-            <option value hidden>
-              Order by Type:
-            </option>
-            <option defaultvalue="getAll">All types</option>
+            <option defaultValue="getAll">All types</option>
             {types.map((type) => {
               return (
                 <option key={type.id} value={type.name}>

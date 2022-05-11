@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getByID, getByName } from "../../actions/index.js";
-import { Loading } from "../Loading/Loading.jsx";
+import { getByID } from "../../actions/index.js";
 import Pokemon from "../Pokemon/Pokemon.jsx";
 import "./Pokemons.css";
 
 export default function Pokemons(params) {
   const dispatch = useDispatch();
-
+  console.log("pokemons", params);
   let data = params.params;
 
   return (
