@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAll,
@@ -25,11 +25,10 @@ export const Home = () => {
 
   const [input, setInput] = useState("");
   const [selectionType, setselectionType] = useState();
-  const [page, setpage] = useState(0);
-  const [current, setcurrent] = useState(0);
+  let page = useRef(0);
+  let current = useRef(0);
   const [maxPorPagina] = useState(9);
-  const [data, setData] = useState([]);
-  console.log("data", data);
+  const [data, setData] = useState([]); //aca esta el problema
   const maxPaginas = Math.ceil(pokemons.length / maxPorPagina);
   const [selectionOrder, setselectionOrder] = useState();
   let history = useHistory();
@@ -48,7 +47,6 @@ export const Home = () => {
   const handleSubmitType = (e) => {
     e.preventDefault();
     if (selectionType === "getAll") {
-      setcurrent(0);
       paginar();
     } else {
       let tipoSeleccionado = pokemons.filter(
@@ -95,29 +93,28 @@ export const Home = () => {
   }
 
   function paginar() {
-    console.log("current", current, current + maxPorPagina);
     setData(() => pokemons.slice(current, current + maxPorPagina));
   }
 
-  const handleClickNext = (e) => {
+  /*  const handleClickNext = (e) => {
     if (page < maxPaginas - 1) {
-      setpage(page + 1);
-      setcurrent(current + maxPorPagina);
+      page = page + 1;
+      current = current + 1;
     }
   };
   const handleClickPrev = (e) => {
     if (page > 0) {
-      setpage(page - 1);
-      setcurrent(current - maxPorPagina);
+      page = page - 1;
+      current = current - maxPorPagina;
     }
-  };
+  }; */
   const handleClickNum = (e) => {
-    setpage(e.target.value);
+    page = e.target.value;
     if (e.target.value === "1") {
-      setcurrent(0);
+      current = 0;
       paginar();
     } else {
-      setcurrent((page - 1) * maxPorPagina);
+      current = (page - 1) * maxPorPagina;
       paginar();
     }
   };
@@ -155,19 +152,19 @@ export const Home = () => {
             </option>
             <option value="Name A-Z">Name A-Z</option>
             <option value="Name Z-A">Name Z-A</option>
-            <option defaultvalue="ID asc">ID asc</option>
+            <option defaultValue="ID asc">ID asc</option>
             <option value="ID des">ID desc</option>
           </select>
           <input className="retro-button" type="submit" value="Select" />
         </form>
 
         <div>
-          <input
+          {/* <input
             className="retro-button red-button"
             type="button"
             onClick={handleClickPrev}
             value="Prev"
-          />
+          /> */}
           {aux.map((num) => {
             return (
               <input
@@ -179,12 +176,12 @@ export const Home = () => {
               />
             );
           })}
-          <input
+          {/*  <input
             className="retro-button green-button"
             type="button"
             onClick={handleClickNext}
             value="Next"
-          />
+          /> */}
         </div>
       </div>
       <form onSubmit={handleSubmit}>

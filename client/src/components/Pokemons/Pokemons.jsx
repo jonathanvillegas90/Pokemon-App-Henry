@@ -7,7 +7,6 @@ import "./Pokemons.css";
 
 export default function Pokemons(params) {
   const dispatch = useDispatch();
-  console.log("pokemons", params);
   let data = params.params;
 
   return (
