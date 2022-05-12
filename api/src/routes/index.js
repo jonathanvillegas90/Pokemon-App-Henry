@@ -9,7 +9,9 @@ const { Type } = require("../db");
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 const router = Router();
-
+router.get("/", (req, res) => {
+  res.json("Servidor en linea");
+});
 router.use("/pokemon", PokemonRoute);
 router.use("/type", TypeRoute);
 

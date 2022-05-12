@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L",
+    "start": "node index.js",
     "test": "mocha -w ./tests/**/*.spec.js"
   },
   "author": "Henry",
@@ -25,13 +25,13 @@
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
-    "uuidv4": "^6.2.12"
+    "uuidv4": "^6.2.12",
+    "nodemon": "^2.0.14"
   },
   "devDependencies": {
-    "supertest-session": "^4.1.0",
-    "mocha": "^8.2.1",
     "chai": "^4.2.0",
-    "nodemon": "^2.0.6",
-    "supertest": "^6.0.1"
+    "mocha": "^8.2.1",
+    "supertest": "^6.0.1",
+    "supertest-session": "^4.1.0"
   }
 }
