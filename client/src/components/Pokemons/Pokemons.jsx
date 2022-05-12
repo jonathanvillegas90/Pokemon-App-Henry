@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getByID } from "../../funcionalidad/actions/index.js";
+import { getByName } from "../../funcionalidad/actions/index.js";
 import Pokemon from "../Pokemon/Pokemon.jsx";
 import "./Pokemons.css";
 
@@ -17,7 +17,7 @@ export default function Pokemons(params) {
             <div key={pokemon.id}>
               <Link
                 to={`/pokemon/${pokemon.name}`}
-                onClick={() => dispatch(getByID(pokemon.id))}
+                onClick={() => dispatch(getByName(pokemon.name))}
               >
                 <Pokemon
                   id={pokemon.id}
