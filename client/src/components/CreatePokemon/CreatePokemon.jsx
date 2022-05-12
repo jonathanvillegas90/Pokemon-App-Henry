@@ -44,7 +44,7 @@ function CreatePokemon() {
       dispatch(addPokemon(input));
       setInput({});
       alert("pokemon creado correctamente");
-      window.location = "http://localhost:3000/home";
+      window.location = "https://effulgent-phoenix-3f4532.netlify.app/home";
     } else {
       alert("no se están colocando los valores correctos");
     }
