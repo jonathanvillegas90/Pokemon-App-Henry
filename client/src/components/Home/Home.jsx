@@ -6,7 +6,7 @@ import {
   OrderByID,
   orderByName,
   getByName,
-} from "../../actions";
+} from "../../funcionalidad/actions";
 import Pokemons from "../Pokemons/Pokemons";
 import { Loading } from "../Loading/Loading";
 import "./Home.css";

@@ -3,7 +3,7 @@ const axios = require("axios");
 export function addPokemon(pokemon) {
   return function (dispatch) {
     return axios
-      .post("http://localhost:3001/pokemon", pokemon)
+      .post("https://pokemonjony.herokuapp.com/pokemon", pokemon)
       .catch({ msg: "algo fallo" });
   };
 }
@@ -11,7 +11,7 @@ export function addPokemon(pokemon) {
 export function getAll() {
   return function (dispatch) {
     return axios
-      .get("http://localhost:3001/pokemon")
+      .get("https://pokemonjony.herokuapp.com/pokemon")
       .then((response) => {
         dispatch({ type: "GET_ALL_POKEMONS", payload: response.data });
       })
@@ -22,7 +22,7 @@ export function getAll() {
 export function getByName(name) {
   return function (dispatch) {
     return axios
-      .get(`http://localhost:3001/pokemon?name=${name}`)
+      .get(`https://pokemonjony.herokuapp.com/pokemon?name=${name}`)
       .then((response) => {
         dispatch({ type: "GET_BY_NAME", payload: response.data });
       })
@@ -38,7 +38,7 @@ export function getByNameSearch(name) {
 export function getByID(id) {
   return function (dispatch) {
     return axios
-      .get(`http://localhost:3001/pokemon/${id}`)
+      .get(`https://pokemonjony.herokuapp.com/pokemon/${id}`)
       .then((response) => {
         dispatch({ type: "GET_BY_ID", payload: response.data });
       })
@@ -47,9 +47,11 @@ export function getByID(id) {
 }
 export function getType() {
   return function (dispatch) {
-    return axios.get("http://localhost:3001/type").then((response) => {
-      dispatch({ type: "GET_ALL_TYPE", payload: response.data });
-    });
+    return axios
+      .get("https://pokemonjony.herokuapp.com/type")
+      .then((response) => {
+        dispatch({ type: "GET_ALL_TYPE", payload: response.data });
+      });
   };
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { getByName } from "../../actions";
+import { getByName } from "../../funcionalidad/actions";
 
 export const SearchBar = () => {
   const [input, setInput] = useState("");

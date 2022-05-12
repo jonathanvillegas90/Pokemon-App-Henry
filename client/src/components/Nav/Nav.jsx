@@ -3,7 +3,7 @@ import Logo from "../../image/Logo.png";
 import { Link } from "react-router-dom";
 import "./Nav.css";
 import { useDispatch } from "react-redux";
-import { cleanDetail } from "../../actions";
+import { cleanDetail } from "../../funcionalidad/actions";
 
 export const Nav = () => {
   const dispatch = useDispatch();

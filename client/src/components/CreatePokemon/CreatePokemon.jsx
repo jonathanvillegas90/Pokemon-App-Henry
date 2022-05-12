@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addPokemon } from "../../actions";
+import { addPokemon } from "../../funcionalidad/actions";
 import { useDispatch, useSelector } from "react-redux";
 import "./CreatePokemon.css";
 
