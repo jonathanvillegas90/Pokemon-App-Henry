@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getAll,
@@ -25,8 +25,8 @@ export const Home = () => {
 
   const [input, setInput] = useState("");
   const [selectionType, setselectionType] = useState();
-  let page = useRef(0);
-  let current = useRef(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
   const [maxPorPagina] = useState(9);
   const [data, setData] = useState([]); //aca esta el problema
   const maxPaginas = Math.ceil(pokemons.length / maxPorPagina);
@@ -46,13 +46,14 @@ export const Home = () => {
   };
   const handleSubmitType = (e) => {
     e.preventDefault();
-    if (selectionType === "getAll") {
-      paginar();
+    if (selectionType === "All types") {
+      dispatch(getAll());
     } else {
       let tipoSeleccionado = pokemons.filter(
         (pokemon) => pokemon.typePokemon === selectionType
       );
       setData(tipoSeleccionado);
+      setCurrentPage(0);
     }
   };
   const handleChangeOrder = (e) => {
@@ -93,28 +94,25 @@ export const Home = () => {
   }
 
   function paginar() {
-    setData(() => pokemons.slice(current, current + maxPorPagina));
+    return setData(() =>
+      pokemons.slice(currentPage, currentPage + maxPorPagina)
+    );
   }
 
-  /*  const handleClickNext = (e) => {
-    if (page < maxPaginas - 1) {
-      page = page + 1;
-      current = current + 1;
-    }
+  const handleClickNext = (e) => {
+    setCurrentPage(currentPage + maxPorPagina);
+    paginar();
   };
-  const handleClickPrev = (e) => {
-    if (page > 0) {
-      page = page - 1;
-      current = current - maxPorPagina;
-    }
-  }; */
+  const handleClickPrev = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - maxPorPagina);
+    paginar();
+  };
   const handleClickNum = (e) => {
-    page = e.target.value;
     if (e.target.value === "1") {
-      current = 0;
+      setCurrentPage(0);
       paginar();
     } else {
-      current = (page - 1) * maxPorPagina;
+      setCurrentPage(() => (e.target.value - 1) * maxPorPagina);
       paginar();
     }
   };
@@ -127,7 +125,7 @@ export const Home = () => {
             className="retro-button blue-button"
             onChange={handleChangeType}
           >
-            <option defaultValue="getAll">All types</option>
+            <option>All types</option>
             {types.map((type) => {
               return (
                 <option key={type.id} value={type.name}>
@@ -159,12 +157,12 @@ export const Home = () => {
         </form>
 
         <div>
-          {/* <input
+          <input
             className="retro-button red-button"
             type="button"
             onClick={handleClickPrev}
             value="Prev"
-          /> */}
+          />
           {aux.map((num) => {
             return (
               <input
@@ -176,12 +174,12 @@ export const Home = () => {
               />
             );
           })}
-          {/*  <input
+          <input
             className="retro-button green-button"
             type="button"
             onClick={handleClickNext}
             value="Next"
-          /> */}
+          />
         </div>
       </div>
       <form onSubmit={handleSubmit}>
